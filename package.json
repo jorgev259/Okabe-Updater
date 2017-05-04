@@ -4,7 +4,6 @@
   "description": "",
   "main": "segasaturn.js",
   "scripts": {
-    "test": "node segasaturn - copia.js",
     "start": "node segasaturn.js"
   },
   "author": "",
