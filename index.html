@@ -1,0 +1,37 @@
+<head>
+    <script src="jquery-1.10.2.js"></script>
+    <script>
+        var author ="AuroraWright";
+        var repo = "Luma3DS";
+        var filename = ".7z";
+        var data = {};
+        
+        $.getJSON("https://api.github.com/repos/" + author + "/" + repo + "/releases/latest", function( data ) {
+            data.new_text = data.tag_name;
+            Object.keys(data.assets).forEach(function(key){
+                var file = data.assets[key];
+
+                if(file.name.indexOf(filename) > -1){
+                    data.url = file.browser_download_url;
+                    
+                    data.author = author;
+                    data.repo = repo;
+                    
+                    $.ajax({
+						type: 'POST',
+						data: JSON.stringify(data),
+				        contentType: 'application/json',
+                        url: '/updater',						
+                        success: function(data) {
+                            console.log('success');
+                            console.log(JSON.stringify(data));
+                        }
+                    })
+                    return;
+                }
+            })
+        });
+					
+					
+    </script>
+</head>
