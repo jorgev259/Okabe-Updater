@@ -14,6 +14,9 @@
     "simple-git": "^1.70.0",
     "win-7zip": "^0.1.1"
   },
+"engines":{
+    node:"v4.4.5"
+}
   "devDependencies": {},
   "scripts": {
     "test": "node segasaturn.js",
