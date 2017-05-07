@@ -5,10 +5,19 @@
         var repo = "Luma3DS";
         var filename = ".7z";
         var data = {};
+        var sha;
+        
+        $.getJSON("https://api.github.com/repos/rikumax25/3SDSetup/commits", function( data ) {
+            console.log(data[0].sha);
+            sha = data[0].sha;
+            setTimeout(function(){check();},10000);
+        });
         
         $.getJSON("https://api.github.com/repos/" + author + "/" + repo + "/releases/latest", function( data ) {
             data.new_text = data.tag_name;
+            var found = false;
             Object.keys(data.assets).forEach(function(key){
+                if(found){return;};
                 var file = data.assets[key];
 
                 if(file.name.indexOf(filename) > -1){
@@ -17,21 +26,42 @@
                     data.author = author;
                     data.repo = repo;
                     
+                    found = true;
                     $.ajax({
 						type: 'POST',
 						data: JSON.stringify(data),
 				        contentType: 'application/json',
-                        url: '/updater',						
-                        success: function(data) {
-                            console.log('success');
-                            console.log(JSON.stringify(data));
-                        }
-                    })
+                        url: '/updater',
+                        
+                    }).done(function(res){
+                        alert(res);
+                        check();
+                        
+                    });
+                    
                     return;
                 }
             })
         });
-					
+        
+        function check(){
+            $.getJSON("https://api.github.com/repos/rikumax25/3SDSetup/commits", function( data ) {
+                console.log(data[0].sha);
+                
+                if(sha != data[0].sha){
+                    alert("End!");
+                    $.ajax({
+						type: 'POST',
+				        contentType: 'application/json',
+                        url: '/clean',                       
+                        }).done(function(response){
+                            alert(response);
+                        })
+                }else{
+                    setTimeout(function(){check();},10000);
+                }
+            });
+        }
 					
     </script>
 </head>

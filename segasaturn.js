@@ -7,23 +7,30 @@ var app = express();
 var Promises = require('promises');
 var Repository = require('git-cli').Repository;
 var working = false;
+cleanup();
 
+app.post('/clean',function(req,res){
+    cleanup();
+    res.end("Good!");
+})
 
 app.post('/updater', function(req, res){
+    console.log("\n" + working);
     if(!working){
-        working = true;
-        var store = {};
-        var binario;
-        var datos;
 
-        req.on('data', function(data){
-            store = data;
-            binario=(store.toString('utf8'));
-            datos=JSON.parse(binario);
-        }); 
-        req.on('end',function(){       
-            download(datos);
-        })
+            working = true;
+            var store = {};
+            var binario;
+            var datos;
+
+            req.on('data', function(data){
+                store = data;
+                binario=(store.toString('utf8'));
+                datos=JSON.parse(binario);
+                download(datos);
+            }); 
+    }else{
+        res.send("Already working!");
     }
 });
 
@@ -68,7 +75,7 @@ function download_repo(data,repo){
                         require('simple-git')(__dirname + '/3SDSetup/')
                              .add('./*')
                              .commit("Updated " + data.repo + " (message by Okabe Updater)")
-                             .push('origin', 'master',cleanup(data));
+                             .push('origin', 'master');
                     })
                     
                         
@@ -76,7 +83,7 @@ function download_repo(data,repo){
         })
 }
 
-function cleanup(data){
+function cleanup(){
     console.log("Cleanup");
     fs.emptyDir(__dirname + '/uncompressed');
     fs.emptyDir(__dirname + '/temp');
