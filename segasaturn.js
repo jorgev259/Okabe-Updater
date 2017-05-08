@@ -17,7 +17,6 @@ app.post('/clean',function(req,res){
 app.post('/updater', function(req, res){
     console.log("\n" + working);
     if(!working){
-
             working = true;
             var store = {};
             var binario;
@@ -30,8 +29,11 @@ app.post('/updater', function(req, res){
                 download(datos);
             }); 
     }else{
-        res.send("Already working!");
+        console.log("Already working!");
     }
+    
+    res.send("ok");
+    res.end();
 });
 
 function download(data) {

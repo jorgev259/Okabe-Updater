@@ -16,7 +16,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "node segasaturn.js",
+      "test": "node segasaturn.js",
       "start": "node segasaturn.js"
   },
   "repository": {
