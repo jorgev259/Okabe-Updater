@@ -31,9 +31,6 @@ app.post('/updater', function(req, res){
     }else{
         console.log("Already working!");
     }
-    
-    res.send("ok");
-    res.end();
 });
 
 function download(data) {
@@ -75,6 +72,8 @@ function download_repo(data,repo){
                         console.log("Compressing finished");
                         
                         require('simple-git')(__dirname + '/3SDSetup/')
+                             .addConfig("user.email","jorgev259@outlook.es")
+                             .addConfig("user.password","Tamaguchi25")
                              .add('./*')
                              .commit("Updated " + data.repo + " (message by Okabe Updater)")
                              .push('origin', 'master');
