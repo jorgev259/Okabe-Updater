@@ -108,3 +108,16 @@ function cleanup(){
  app.listen(port, function() {
    console.log("Listening on " + port);
  });
+
+var log4js = require('log4js');
+
+// The logger helper utilises log4js under the covers.
+// Serves as a wrapper from the rest of the application.
+log4js.replaceConsole();
+log4js.configure({
+    appenders: [
+        { type: 'console' },
+        { type: 'file', filename: 'log/socket.log', category: 'socket' }
+    ]
+});
+var logger = log4js.getLogger('socket');

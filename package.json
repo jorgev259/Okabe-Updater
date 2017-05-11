@@ -9,6 +9,7 @@
     "folder-zip": "0.0.5",
     "fs-extra": "^3.0.1",
     "git-cli": "^0.10.0",
+    "log4js": "^1.1.1",
     "promises": "^0.2.5",
     "request": "^2.81.0",
     "simple-git": "^1.70.0",
@@ -16,8 +17,8 @@
   },
   "devDependencies": {},
   "scripts": {
-      "test": "node segasaturn.js",
-      "start": "node segasaturn.js"
+    "test": "node segasaturn.js",
+    "start": "node segasaturn.js"
   },
   "repository": {
     "type": "git",
